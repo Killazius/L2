@@ -15,6 +15,15 @@ import (
 // поэтому err == nil вернет false, так как tab != nil
 //
 // fmt.Println(err) выведет nil, потому что внутри интерфейса лежит nil-указатель (data == nil), а тип (tab) задан.
+
+// пустой интерфейс interface{} имеет такую структуру:
+// у него нет метаданных *itab с методами, но есть тип и данные
+// поэтому пустой интерфейс с nil-указателем внутри будет равен nil
+//
+//	type eface struct {
+//		_type *_type
+//		data  unsafe.Pointer
+//	}
 func Foo() error {
 	var err *os.PathError = nil
 	return err
