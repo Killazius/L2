@@ -1,6 +1,6 @@
 .PHONY: test lint vet build clear
 MAIN_FILE ?= main.go
-BIN_NAME ?= grep
+BIN_NAME ?= cut
 BUILD_DIR ?= ./bin
 GO_BUILD_FLAGS ?=
 GO_TEST_FLAGS ?= -v -race -parallel 5 -shuffle=on -coverprofile=./cover.out -covermode=atomic
