@@ -1,4 +1,3 @@
-// ...config for cut utility...
 package config
 
 import (
