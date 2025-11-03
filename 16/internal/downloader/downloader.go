@@ -32,16 +32,16 @@ func (d *Downloader) download(u *url.URL) (*parser.ParseResult, error) {
 
 	var resp *http.Response
 	var err error
-	for try := 0; try < int(d.cfg.Retries); try++ {
+	for try := uint(0); try < d.cfg.Retries; try++ {
 		slog.Info("Attempting to download", "url", urlString, "try", try+1)
 		resp, err = d.client.Get(urlString)
 		if err == nil {
 			slog.Info("Downloaded", "url", urlString, "status", resp.StatusCode)
 			break
-		} else {
-			slog.Warn("Download attempt failed", "url", urlString, "error", err)
 		}
+		slog.Warn("Download attempt failed", "url", urlString, "error", err)
 	}
+	defer resp.Body.Close()
 	if err != nil {
 		slog.Error("All download attempts failed", "url", urlString, "error", err)
 		return nil, err

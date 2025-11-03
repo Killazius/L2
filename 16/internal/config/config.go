@@ -7,9 +7,9 @@ import (
 
 type Config struct {
 	Depth      uint
-	Timeout    uint
+	Timeout    int64
 	Retries    uint
-	NumWorkers uint
+	NumWorkers int64
 }
 
 func (c Config) TimeoutSeconds() time.Duration {
@@ -17,11 +17,15 @@ func (c Config) TimeoutSeconds() time.Duration {
 }
 
 func New() *Config {
-	duration := flag.Uint("t", 10, "timeout seconds per page (default 10)")
+	duration := flag.Int64("t", 10, "timeout seconds per page (default 10)")
 	depth := flag.Uint("d", 0, "depth (default 0 for only root page)")
 	retries := flag.Uint("r", 1, "num of tries (default 1)")
-	numWorkers := flag.Uint("w", 10, "num of workers(default 10)")
+	numWorkers := flag.Int64("w", 10, "num of workers(default 10)")
 	flag.Parse()
+
+	if *duration <= 0 {
+		*duration = 10
+	}
 	if *numWorkers == 0 {
 		*numWorkers = 10
 	}
